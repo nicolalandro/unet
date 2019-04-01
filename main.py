@@ -1,9 +1,12 @@
+from keras.callbacks import ModelCheckpoint
+
 from data import *
 from model import *
 
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
-DATASET_BASE_PATH = 'data/membrane'
+# DATASET_BASE_PATH = 'data/membrane'
+DATASET_BASE_PATH = 'data/cervello'
 
 train_dataset = '%s/train' % DATASET_BASE_PATH
 test_dataset = "%s/test" % DATASET_BASE_PATH
@@ -22,8 +25,8 @@ myGene = trainGenerator(2, train_dataset, 'images', 'labels', data_gen_args, sav
 
 model = unet()
 model_checkpoint = ModelCheckpoint(model_name, monitor='loss', verbose=1, save_best_only=True)
-model.fit_generator(myGene, steps_per_epoch=300, epochs=1, callbacks=[model_checkpoint])
+model.fit_generator(myGene, steps_per_epoch=1, epochs=10, callbacks=[model_checkpoint])
 
 testGene = testGenerator("%s" % test_dataset)
-results = model.predict_generator(testGene, 30, verbose=1)
+results = model.predict_generator(testGene, 1, verbose=1)
 saveResult(results_folder, results)
