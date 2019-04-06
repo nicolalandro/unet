@@ -1,5 +1,7 @@
 .idea
 data/cervello
 data/cervello_crop
+data/tumor_segmentation
+
 __pycache__/
 *.hdf5
